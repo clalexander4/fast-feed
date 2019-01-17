@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Classes/Post.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,13 +21,13 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Demo Home Page', post: fetchPost('https://us-central1-fastfeed-4cef4.cloudfunctions.net/helloWorld')),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.title, this.post}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -38,13 +39,16 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  final Future<Post> post;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(post: post);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  _MyHomePageState({Key key, this.post});
   int _counter = 0;
+  final Future<Post> post;
 
   void _incrementCounter() {
     setState(() {
@@ -59,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -91,8 +96,17 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            FutureBuilder<Post>(
+              future: post,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data.body);
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+
+                return CircularProgressIndicator();
+              }
             ),
             Text(
               '$_counter',
