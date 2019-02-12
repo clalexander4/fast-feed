@@ -6,3 +6,6 @@
 typings/
 
 node_modules/
+
+# key api keys in config safe
+src/config.ts
