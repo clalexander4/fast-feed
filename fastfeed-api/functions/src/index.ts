@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as Twitter from 'twitter';
 import * as config from './config';
+import * as twtfunctions from './twtfunctions';
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -14,13 +15,7 @@ var client = new Twitter({
   });
 
 export const getTwitterFollowing = functions.https.onRequest((request, response) => {
-    client.get('friends/list', { screen_name: "rtrPAWLfan" }, function(error, tweets, res) {
-        if (error) throw error;
-        response.send({
-            "tweets": tweets,
-            "users": JSON.parse(res["body"])["users"]
-        });
-    });
+    twtfunctions.getFollowing(client, response);
 });
 
 export const helloWorld = functions.https.onRequest((request, response) => {
