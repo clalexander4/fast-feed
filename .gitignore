@@ -2,3 +2,4 @@
 fastfeed-mobile/.DS_Store
 .vscode/launch.json
 fastfeed-mobile/fastfeed/ios/GoogleService-Info.plist
+fastfeed-mobile/fastfeed/android/app/google-services.json
