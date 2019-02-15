@@ -1,32 +1,49 @@
 import * as functions from 'firebase-functions';
-import * as Twitter from 'twitter';
-import * as config from './config';
-import * as twtfunctions from './twtfunctions';
+import * as admin from 'firebase-admin';
+// import * as Twitter from 'twitter';
+// import * as config from './config';
+// import * as twtfunctions from './twtfunctions';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
+admin.initializeApp();
+const db = admin.firestore();
 
-var client = new Twitter({
-    consumer_key: config.twitterKeys["consumer_key"],
-    consumer_secret: config.twitterKeys["consumer_secret"],
-    access_token_key: config.twitterKeys["access_token_key"],
-    access_token_secret: config.twitterKeys["access_token_secret"]
-  });
+// var client = new Twitter({
+//     consumer_key: config.twitterKeys["consumer_key"],
+//     consumer_secret: config.twitterKeys["consumer_secret"],
+//     access_token_key: config.twitterKeys["access_token_key"],
+//     access_token_secret: config.twitterKeys["access_token_secret"]
+//   });
 
-export const getTwitterFollowing = functions.https.onRequest((request, response) => {
-    twtfunctions.getFollowing(client, response);
-});
+// export const getTwitterFollowing = functions.https.onRequest((request, response) => {
+//     twtfunctions.getFollowing(client, response);
+// });
 
 export const helloWorld = functions.https.onRequest((request, response) => {
-    if ("name" in request.body) {
+    console.log(request.body.data);
+    if ("name" in request.body.data) {
         response.send({ 
-            "message": `Sup ${request.body["name"]}!`
+            "data": {
+                "message": `Sup ${request.body.data["name"]}!`
+            }
         });
     }
     else {
         response.send({
-            "error": "No name was provided"
+            "data": {
+                "error": "No name was provided"
+            }
         });
     }
 });
+
+export const createUserRecord = functions.auth
+    .user()
+    .onCreate((user, context) => {
+        const userRef = db.doc(`users/${user.uid}`);
+
+        return userRef.set({
+            email: user.email,
+            createdAt: context.timestamp,
+            uid: user.uid
+        });
+    });

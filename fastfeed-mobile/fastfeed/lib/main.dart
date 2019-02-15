@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fastfeed/Pages/login.dart';
 import 'package:fastfeed/Pages/home.dart';
-import 'package:fastfeed/Classes/post.dart';
+import 'package:fastfeed/Classes/functions.dart';
 import 'package:fastfeed/Classes/auth.dart';
 
 void main() => runApp(MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'FastFeed',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -27,7 +27,9 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder(
             stream: authService.user,
             builder: (context, snapshot) => (snapshot.hasData)
-                ? MyHomePage(title: 'FastFeed', post: fetchPost('https://us-central1-fastfeed-4cef4.cloudfunctions.net/helloWorld'))
+                ? MyHomePage(
+                  title: 'FastFeed', 
+                  welcomeText: callFunction('helloWorld', <String, dynamic>{ "name": snapshot.data.email }),)
                 : LoginSignUpPage()),
     );
   }

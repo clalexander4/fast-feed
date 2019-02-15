@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fastfeed/Classes/post.dart';
 import 'package:fastfeed/Classes/auth.dart';
 import 'package:fastfeed/Enum/appOptions.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title, this.post}) : super(key: key);
+  MyHomePage({Key key, this.title, this.welcomeText}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -16,16 +15,16 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
-  final Future<Post> post;
+  final Future<dynamic> welcomeText;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState(post: post);
+  _MyHomePageState createState() => _MyHomePageState(welcomeText: welcomeText);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  _MyHomePageState({Key key, this.post});
+  _MyHomePageState({Key key, this.welcomeText});
   int _counter = 0;
-  final Future<Post> post;
+  final Future<dynamic> welcomeText;
 
   void _incrementCounter() {
     setState(() {
@@ -89,11 +88,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FutureBuilder<Post>(
-                future: post,
+            FutureBuilder<dynamic>(
+                future: welcomeText,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Text(snapshot.data.body);
+                    return Text((snapshot.data.containsKey("message")) ? snapshot.data["message"] : "Hello!");
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
