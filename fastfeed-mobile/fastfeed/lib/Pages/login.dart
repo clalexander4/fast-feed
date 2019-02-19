@@ -16,6 +16,7 @@ enum FormMode { LOGIN, SIGNUP, GOOGLE }
 class _LoginSignUpPageState extends State<LoginSignUpPage> {
   final _formKey = new GlobalKey<FormState>();
 
+  String _name;
   String _email;
   String _password;
   String _errorMessage;
@@ -67,9 +68,9 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       print('Error: $e');
       setState(() {
         _isLoading = false;
-        if (_isIos) {
-          _errorMessage = e.details;
-        } else
+        // if (_isIos) { //iOS currently appears to be showing e.message
+        //   _errorMessage = e.details;
+        // } else
           _errorMessage = e.message;
       });
     }
@@ -147,7 +148,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   }
 
   Widget _showErrorMessage() {
-    if (_errorMessage.length > 0 && _errorMessage != null) {
+    if (_errorMessage != null && _errorMessage.length > 0) {
       return new Text(
         _errorMessage,
         style: TextStyle(
@@ -173,6 +174,25 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
           radius: 24.0,
           child: Image.asset('assets/icon.png'),
         ),
+      ),
+    );
+  }
+
+  Widget _showNameInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
+      child: new TextFormField(
+        maxLines: 1,
+        keyboardType: TextInputType.text,
+        autofocus: true,
+        decoration: new InputDecoration(
+            hintText: 'Name',
+            icon: new Icon(
+              Icons.person,
+              color: Colors.grey,
+            )),
+        validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
+        onSaved: (value) => _name = value,
       ),
     );
   }

@@ -44,9 +44,15 @@ class AuthService {
     return signedIn(user);
   }
 
-  Future<FirebaseUser> signUp(String email, String password) async { //TODO: handle bad email
-    FirebaseUser user = await _auth.createUserWithEmailAndPassword(
+  Future<FirebaseUser> signUp(String email, String password) async {
+    FirebaseUser user = null;
+    try {
+      user = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
+    }
+    catch (ex) {
+      throw ex;
+    }
     return signedIn(user);
   }
 
@@ -85,5 +91,4 @@ class AuthService {
   }
 }
 
-// TODO refactor global to InheritedWidget
 final AuthService authService = AuthService();
