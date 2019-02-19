@@ -52,11 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
           // menu
           PopupMenuButton<AppOptions>(
             onSelected: (AppOptions option) {
-              switch(option) {
-                case AppOptions.signOut: {
-                  authService.signOut();
-                }
-                break;
+              switch (option) {
+                case AppOptions.signOut:
+                  {
+                    authService.signOut();
+                  }
+                  break;
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<AppOptions>>[
@@ -92,7 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 future: welcomeText,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Text((snapshot.data.containsKey("message")) ? snapshot.data["message"] : "Hello!");
+                    return Text((snapshot.data.containsKey("message"))
+                        ? snapshot.data["message"]
+                        : "Hello!");
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
