@@ -15,7 +15,16 @@ export const searchTweets = function (client: Twitter, response: functions.Respo
     client.get('search/tweets', {q: 'Alabama Football'}, function(error, tweets, res) {
         if(error) throw error;
         response.send({
-            "tweets": tweets,
-        })
+            "tweets": tweets
+        });
      });
+}
+
+export const searchUsers = function (client: Twitter, response: functions.Response){
+    client.get('search/users', {q: 'Jacoby Benger'}, function(error, users, res) {
+        if(error) throw error;
+        response.send({
+            "users": users
+        });
+    });
 }

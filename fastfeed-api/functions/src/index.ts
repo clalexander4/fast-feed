@@ -8,27 +8,31 @@ import * as twtfunctions from './twtfunctions';
 //
 
 //Application Only Authentication - Public Data only 
-// var client = new Twitter({
-//     consumer_key: config.twitterKeys["consumer_key"],
-//     consumer_secret: config.twitterKeys["consumer_secret"],
-//     bearer_token: config.twitterKeys["bearer_key"]
-// });
+var client = new Twitter({
+    consumer_key: config.twitterKeys["consumer_key"],
+    consumer_secret: config.twitterKeys["consumer_secret"],
+    bearer_token: config.twitterKeys["bearer_key"]
+});
+
+export const searchUsers = functions.https.onRequest((request, response) => {
+    twtfunctions.searchUsers(client, response);
+});
 
 // export const searchTweets = functions.https.onRequest((request, response) => {
 //     twtfunctions.searchTweets(client, response);
 // });
 
 
-var client = new Twitter({
-    consumer_key: config.twitterKeys["consumer_key"],
-    consumer_secret: config.twitterKeys["consumer_secret"],
-    access_token_key: config.twitterKeys["access_token_key"],
-    access_token_secret: config.twitterKeys["access_token_secret"]
-  });
+// var client = new Twitter({
+//     consumer_key: config.twitterKeys["consumer_key"],
+//     consumer_secret: config.twitterKeys["consumer_secret"],
+//     access_token_key: config.twitterKeys["access_token_key"],
+//     access_token_secret: config.twitterKeys["access_token_secret"]
+//   });
 
-export const getTwitterFollowing = functions.https.onRequest((request, response) => {
-    twtfunctions.getFollowing(client, response);
-});
+// export const getTwitterFollowing = functions.https.onRequest((request, response) => {
+//     twtfunctions.getFollowing(client, response);
+// });
 
 
 // export const helloWorld = functions.https.onRequest((request, response) => {
