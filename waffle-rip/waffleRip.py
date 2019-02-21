@@ -6,6 +6,7 @@ with open('input.json', 'r') as file:
     data = json.loads(urllib.request.urlopen("https://api.waffle.io/damccoy1/fast-feed/cards").read().decode('utf8').replace("'", '"'))
     for item in data:
         item["description"] = json.loads(urllib.request.urlopen("https://api.github.com/repos/damccoy1/fast-feed/issues/" + str(item["githubMetadata"]["number"])).read().decode('utf8').replace("'", '"'))["body"]
+        item["comments"] = json.loads(urllib.request.urlopen("https://api.github.com/repos/damccoy1/fast-feed/issues/" + str(item["githubMetadata"]["number"]) + "/comments").read().decode('utf8').replace("'", '"'))
     with open("sample.json", "w") as out:
         out.write(json.dumps(data))
     with open('ProjectBacklog.csv', 'w') as csvfile:
@@ -21,5 +22,8 @@ with open('input.json', 'r') as file:
     with open('SprintGoalBacklog.txt', 'w') as txtfile:
         for item in data:
             if not item["description"]:
-                item["description"] = ""
-            txtfile.write(item["githubMetadata"]["title"]+"\n"+item["description"]+"\n")
+                item["description"] = "no description"
+            txtfile.write("•" + item["githubMetadata"]["title"]+"\n"+item["description"])
+            for comment in item["comments"]:
+                txtfile.write("\n\t>" + comment["body"].replace("\n", "\n\t") + "\n")
+            txtfile.write("\n\n")
