@@ -10,7 +10,7 @@ description: Get more out of using social media less.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -21,6 +21,7 @@ dependencies:
   cloud_functions: ^0.1.0+1
   google_sign_in: ^4.0.1
   firebase_auth: ^0.8.1+1
+  english_words: ^3.1.0
 
   rxdart: ^0.20.0
 
