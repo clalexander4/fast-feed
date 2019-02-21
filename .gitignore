@@ -9,3 +9,6 @@ waffle-rip/output.csv
 waffle-rip/ProjectBacklog.csv
 waffle-rip/SprintGoalBacklog.txt
 .DS_Store
+fastfeed-mobile/.idea/codeStyles/Project.xml
+fastfeed-mobile/.idea/vcs.xml
+fastfeed-mobile/.idea/workspace.xml
