@@ -4,8 +4,8 @@ fastfeed-mobile/.DS_Store
 fastfeed-mobile/fastfeed/ios/GoogleService-Info.plist
 fastfeed-mobile/fastfeed/android/app/google-services.json
 waffle-rip/sample.json
-.DS_Store
 waffle-rip/input.json
 waffle-rip/output.csv
 waffle-rip/ProjectBacklog.csv
 waffle-rip/SprintGoalBacklog.txt
+.DS_Store
