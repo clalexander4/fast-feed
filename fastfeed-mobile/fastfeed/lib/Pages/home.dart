@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fastfeed/Classes/auth.dart';
+import 'package:fastfeed/Classes/post.dart';
 import 'package:fastfeed/Enum/appOptions.dart';
+import 'package:english_words/english_words.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title, this.welcomeText}) : super(key: key);
@@ -25,6 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
   _MyHomePageState({Key key, this.welcomeText});
   int _counter = 0;
   final Future<dynamic> welcomeText;
+  final wordPair = WordPair.random();
 
   void _incrementCounter() {
     setState(() {
@@ -39,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final posts = Post();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -108,12 +112,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+              future: welcomeText,
+                return CircularProgressIndicator();
+              }),
+          new Expanded(child: posts),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

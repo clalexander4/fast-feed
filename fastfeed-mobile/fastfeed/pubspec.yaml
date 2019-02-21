@@ -21,6 +21,7 @@ dependencies:
   cloud_functions: ^0.1.0+1
   google_sign_in: ^4.0.1
   firebase_auth: ^0.8.1+1
+  english_words: ^3.1.0
 
   rxdart: ^0.20.0
 
