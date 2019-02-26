@@ -28,4 +28,4 @@ export const searchUsers = function (client: Twitter, response: functions.Respon
             "users": users
         });
     });
-}r
+}
