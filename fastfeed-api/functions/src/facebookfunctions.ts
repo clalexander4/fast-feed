@@ -1,18 +1,10 @@
-import * as functions from 'firebase-functions';
-import FB from 'fb';
-
-// ES5
+var options = FB.options();
 var FB = require('fb'),
     fb = new FB.Facebook(options);
 
-    FB.setAccessToken('access_token');
+    FB.options({version: 'v2.4'});
+    var fooApp = FB.extend({appId: 'foo_id', appSecret: 'secret'}),
+        barApp = FB.extend({appId: 'bar_id', appSecret: 'secret'});
     var accessToken = FB.getAccessToken();
-
-    FB.api('4', { fields: ['id', 'name'] }, function (res) {
-        if(!res || res.error) {
-          console.log(!res ? 'error occurred' : res.error);
-          return;
-        }
-        console.log(res.id);
-        console.log(res.name);
-      });
+    console.log(accessToken);
+    //FB.setAccessToken('EAATeoZCPkzmUBAHnv5S3MaEYTpO8ZBoi1gouuihAdlML7aBA1505UVddEmVfwJBYISgT7wio7PFbuu2p4yyXjEjquqN78dXSxZBbuCtAq5HHZBpHAYOCnLjH7DEEwtEtgTnl8daEmcbTDdRPgJ4KjRLZCrwQgFBtL0yHzqt6F0GiBrkAbdei70R7cA5EmbC4ZD');
