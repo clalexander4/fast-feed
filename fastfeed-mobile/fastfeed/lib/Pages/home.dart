@@ -3,7 +3,7 @@ import 'package:fastfeed/Classes/auth.dart';
 import 'package:fastfeed/Classes/post.dart';
 import 'package:fastfeed/Enum/appOptions.dart';
 import 'package:english_words/english_words.dart';
-import 'dart:io';
+import 'package:fastfeed/Pages/feed.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title, this.welcomeText}) : super(key: key);
@@ -56,23 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body:  Column(
-        children: <Widget>[
-          FutureBuilder<dynamic>(
-              future: welcomeText,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListTile(title:(snapshot.data.containsKey("message"))
-                      ? Text(snapshot.data["message"])
-                      : Text("Hello!"));
-                } else if (snapshot.hasError) {
-                  return ListTile(title: Text("${snapshot.error}"));
-                }
-                return CircularProgressIndicator();
-              }),
-          new Expanded(child: posts),
-        ],
-      ),
+      body: Feed()
     );
   }
 }

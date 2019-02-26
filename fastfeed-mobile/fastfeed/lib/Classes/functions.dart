@@ -5,7 +5,6 @@ import 'dart:convert';
  dynamic callFunction(String functionName, Map<String, dynamic> parameters) async {
     try {
     final dynamic response = await http.post(firebaseBaseUrl + functionName, headers: {"Content-Type": "application/json"}, body: json.encode({ "data": parameters }));
-    final String boi = json.encode({ "data": parameters });
     return json.decode(response.body)["data"];
     } catch (e) {
       print('caught generic exception');
