@@ -18,6 +18,17 @@ const db = admin.firestore();
 //     twtfunctions.getFollowing(client, response);
 // });
 
+//Application Only Authentication - Public Data only 
+// var client = new Twitter({
+//     consumer_key: config.twitterKeys["consumer_key"],
+//     consumer_secret: config.twitterKeys["consumer_secret"],
+//     bearer_token: config.twitterKeys["bearer_key"]
+// });
+
+// export const searchUsers = functions.https.onRequest((request, response) => {
+//     twtfunctions.searchUsers(client, response);
+// });
+
 export const helloWorld = functions.https.onRequest((request, response) => {
     console.log(request.body.data);
     if ("name" in request.body.data) {
