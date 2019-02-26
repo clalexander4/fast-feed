@@ -1,0 +1,1 @@
+const String firebaseBaseUrl = "https://us-central1-fastfeed-4cef4.cloudfunctions.net/";
