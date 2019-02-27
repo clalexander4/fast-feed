@@ -51,7 +51,7 @@ class RedditAuthenticator extends OAuthAuthenticator {
       String tokenUrl, String baseUrl, String redirectUrl, List<String> scopes, String state)
       : super(identifier, clientId, clientSecret, tokenUrl, baseUrl,
             redirectUrl) {
-    authCodeKey = "access_token";
+    authCodeKey = "code";
     redirectUri = Uri.parse(redirectUrl);
     state = state;
   }
@@ -96,4 +96,5 @@ class RedditAuthenticator extends OAuthAuthenticator {
 
     return data;
   }
+
 }

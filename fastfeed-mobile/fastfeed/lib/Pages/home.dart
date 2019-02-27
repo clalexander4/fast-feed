@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     {
                       () async {
                         try {
+                          await redditApi.logOut();
                           var user = await redditApi.authenticate();
                           showMessage("${user.userData} logged in");
                         } catch (e) {
