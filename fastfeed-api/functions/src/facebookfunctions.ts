@@ -1,10 +1,44 @@
-var options = FB.options();
-var FB = require('fb'),
-    fb = new FB.Facebook(options);
+import * as functions from 'firebase-functions';
 
-    FB.options({version: 'v2.4'});
-    var fooApp = FB.extend({appId: 'foo_id', appSecret: 'secret'}),
-        barApp = FB.extend({appId: 'bar_id', appSecret: 'secret'});
-    var accessToken = FB.getAccessToken();
-    console.log(accessToken);
-    //FB.setAccessToken('EAATeoZCPkzmUBAHnv5S3MaEYTpO8ZBoi1gouuihAdlML7aBA1505UVddEmVfwJBYISgT7wio7PFbuu2p4yyXjEjquqN78dXSxZBbuCtAq5HHZBpHAYOCnLjH7DEEwtEtgTnl8daEmcbTDdRPgJ4KjRLZCrwQgFBtL0yHzqt6F0GiBrkAbdei70R7cA5EmbC4ZD');
+export const getFbLikes = function (response: functions.Response) {
+  var FB = require('fb');
+  FB.options({version: 'v2.4'});
+  FB.setAccessToken('EAATeoZCPkzmUBAJ8X9PlC88N9qqSZAEMChY9TsgaOyflqPYo1DMPzmKGXrSQevE6s6zbFkBmSSWvjiPqyuIbK6ZBZCsJUMJKyMOp1M5JCZBSW9SXDaBT1AiHZBsJbwEQj0Okq8QB3ZAyXjYoZBBIZAEndONLu7ZCh7IdfQlUC7ko47J3Rx3iJ7ZAcGLkMuZA8kyL2BcZD');
+  FB.api('10213329836548424', { fields: ['id','name', 'likes'] }, function (res:any) {
+      if(!res || res.error) {
+      console.log(!res ? 'error occurred' : res.error);
+      response.send({
+          "data": {
+              "success": false
+          }
+      });
+      }
+      response.send({
+          "data": {
+              "id": res.id,
+              "name": res.name,
+              "likes" : res.likes.data
+          }
+      });
+  });
+};
+export const getFbUserFeed = function (response: functions.Response) {
+  var FB = require('fb');
+  FB.options({version: 'v2.4'});
+  FB.setAccessToken('EAATeoZCPkzmUBAJ8X9PlC88N9qqSZAEMChY9TsgaOyflqPYo1DMPzmKGXrSQevE6s6zbFkBmSSWvjiPqyuIbK6ZBZCsJUMJKyMOp1M5JCZBSW9SXDaBT1AiHZBsJbwEQj0Okq8QB3ZAyXjYoZBBIZAEndONLu7ZCh7IdfQlUC7ko47J3Rx3iJ7ZAcGLkMuZA8kyL2BcZD');
+  FB.api('987160298144095', { fields: ['posts','picture'] }, function (res:any) {
+      if(!res || res.error) {
+      console.log(!res ? 'error occurred' : res.error);
+      response.send({
+          "data": {
+              "success": false
+          }
+      });
+      }
+      response.send({
+          "posts": {
+              "data" : res.posts.data
+          }
+      });
+  });
+};

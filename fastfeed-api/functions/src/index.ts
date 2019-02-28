@@ -3,9 +3,18 @@ import * as admin from 'firebase-admin';
 // import * as Twitter from 'twitter';
 // import * as config from './config';
 // import * as twtfunctions from './twtfunctions';
+import * as fbfunctions from './facebookfunctions';
+
 
 admin.initializeApp();
 const db = admin.firestore();
+
+export const getFacebookUserFeed = functions.https.onRequest((request, response) => {
+    fbfunctions.getFbUserFeed(response);
+});
+export const getFacebookLikes = functions.https.onRequest((request, response) => {
+    fbfunctions.getFbLikes(response);
+});
 
 // var client = new Twitter({
 //     consumer_key: config.twitterKeys["consumer_key"],
