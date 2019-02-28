@@ -1,1 +1,1 @@
-enum AppOptions { signOut }
+enum AppOption { signOut, openConnections }

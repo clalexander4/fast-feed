@@ -11,7 +11,7 @@ class LoginSignUpPage extends StatefulWidget {
   State<StatefulWidget> createState() => new _LoginSignUpPageState();
 }
 
-enum FormMode { LOGIN, SIGNUP, GOOGLE } 
+enum FormMode { LOGIN, SIGNUP, GOOGLE }
 
 class _LoginSignUpPageState extends State<LoginSignUpPage> {
   final _formKey = new GlobalKey<FormState>();
@@ -71,7 +71,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         // if (_isIos) { //iOS currently appears to be showing e.message
         //   _errorMessage = e.details;
         // } else
-          _errorMessage = e.message;
+        _errorMessage = e.message;
       });
     }
   }
@@ -81,7 +81,10 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     _errorMessage = "";
     // _isLoading = false;
     super.initState();
-    authService.loading.listen((state) => setState(() => _isLoading = state));
+    authService.loading.listen((state) => () {
+      if (this.mounted)
+        setState(() => _isLoading = state);
+    } );
   }
 
   void _changeFormToSignUp() {
@@ -277,7 +280,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                 height: 50.0,
                 width: double.infinity,
                 child: RaisedButton(
-                    child: Text('Sign in with Google', style: _biggerText.copyWith(color: Colors.white)),
+                    child: Text('Sign in with Google',
+                        style: _biggerText.copyWith(color: Colors.white)),
                     onPressed: () => _validateAndSubmit(FormMode.GOOGLE),
                     color: Colors.red),
               ),
