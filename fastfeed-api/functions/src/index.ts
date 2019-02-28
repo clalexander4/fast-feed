@@ -25,8 +25,8 @@ const db = admin.firestore();
 //     bearer_token: config.twitterKeys["bearer_key"]
 // });
 
-// export const searchUsers = functions.https.onRequest((request, response) => {
-//     twtfunctions.searchUsers(client, response);
+// export const searchTweets = functions.https.onRequest((request, response) => {
+//     twtfunctions.searchTweets(client, response);
 // });
 
 export const helloWorld = functions.https.onRequest((request, response) => {
