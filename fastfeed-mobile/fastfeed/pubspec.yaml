@@ -19,11 +19,14 @@ dependencies:
   firebase_core: ^0.3.0
   cloud_firestore: ^0.9.0
   cloud_functions: ^0.1.0+1
+  firebase_database: ^2.0.2
   google_sign_in: ^4.0.1
   firebase_auth: ^0.8.1+1
   english_words: ^3.1.0
   http: ^0.12.0+1
-  url_launcher: ^5.0.1
+  simple_auth: ^2.0.1
+  simple_auth_flutter: ^2.0.1
+  simple_auth_generator: ^2.0.1
 
   rxdart: ^0.20.0
 

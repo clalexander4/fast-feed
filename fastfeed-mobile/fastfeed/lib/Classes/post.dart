@@ -1,79 +1,32 @@
-import 'package:english_words/english_words.dart';
-import 'package:flutter/material.dart';
+import 'package:fastfeed/Classes/functions.dart';
+import 'package:fastfeed/Classes/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class PostState extends State<Post> {
-  final _suggestions = <WordPair>[];
-  final Set<WordPair> _saved = new Set<WordPair>();
-  final _biggerFont = const TextStyle(fontSize: 18.0);
-  final _smallerFont = const TextStyle(fontSize: 12.0);
+class Post {
+  Post(this.title, this.author, this.message, this.timestamp, this.likes);
 
-  @override
-  Widget build(BuildContext context) {
-    return _buildSuggestions();
-  }
-
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-          }
-          return _buildRow(_suggestions[index]);
-        });
-  }
-
-  Widget _buildRow(WordPair pair) {
-    final bool alreadySaved = _saved.contains(pair);
-    return Card(
-        child: Column(children: <Widget>[
-      new ListTile(
-        leading: Icon(Icons.person),
-        title: new Text(
-          "Sample Post Title",
-          style: _biggerFont,
-        ),
-        subtitle: new Text(
-          "This is a really cool post from somewhere among your social media feeds",
-          style: _smallerFont,
-        ),
-        trailing: new Icon(
-          alreadySaved ? Icons.favorite : Icons.favorite_border,
-          color: alreadySaved ? Colors.red : null,
-        ),
-        onTap: () {
-          setState(() {
-            if (alreadySaved) {
-              _saved.remove(pair);
-            } else {
-              _saved.add(pair);
-            }
-          });
-        },
-      ),
-      ButtonTheme.bar(
-        // make buttons use the appropriate styles for cards
-        child: ButtonBar(
-          children: <Widget>[
-            FlatButton(
-              child: Icon(Icons.comment),
-              onPressed: () {/* ... */},
-            ),
-            FlatButton(
-              child: Icon(Icons.share),
-              onPressed: () {/* ... */},
-            ),
-          ],
-        ),
-      ),
-    ]));
-  }
+  String title;
+  String author;
+  String message;
+  String timestamp;
+  int likes;
 }
 
-class Post extends StatefulWidget {
-  @override
-  PostState createState() => new PostState();
+Future<List<Post>> getPosts() async {
+  FirebaseUser currentUser = await authService.getCurrentUser();
+  Map<String, dynamic> redditSubmissions = await callFunction(
+      "getRedditPosts", {"subreddit": "all", "uid": currentUser.uid});
+  List<Post> posts = <Post>[];
+  if (redditSubmissions.containsKey("submissions")) {
+    List<dynamic> submissions = redditSubmissions["submissions"];
+    submissions.forEach((submission) => {
+          posts.add(new Post(
+              submission["title"],
+              submission["author"],
+              submission["selftext"],
+              submission["created_utc"].toString(),
+              submission["score"]))
+        });
+  }
+  return posts;
 }
