@@ -12,12 +12,14 @@
   "main": "lib/index.js",
   "dependencies": {
     "@types/basic-auth": "^1.1.2",
+    "@types/snoowrap": "^1.15.3",
     "@types/twitter": "^1.7.0",
     "basic-auth": "^2.0.1",
     "fb": "^2.0.0",
     "firebase-admin": "~6.0.0",
     "firebase-functions": "^2.1.0",
     "request": "^2.88.0",
+    "snoowrap": "^1.15.2",
     "twitter": "^1.7.1"
   },
   "devDependencies": {

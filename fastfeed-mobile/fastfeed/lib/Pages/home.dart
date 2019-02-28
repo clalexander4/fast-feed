@@ -56,12 +56,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         try {
                           await redditApi.logOut();
                           OAuthAccount user = await redditApi.authenticate();
-                          FirebaseUser currentUser = await authService.getCurrentUser();
-                          dynamic response = await callFunction("saveToken", { "token": user.token, "uid": currentUser.uid });
-                          response;
+                          FirebaseUser currentUser =
+                              await authService.getCurrentUser();
+                          callFunction("saveToken",
+                              {"token": user.token, "uid": currentUser.uid});
                           showMessage("Logged into Reddit!");
                         } catch (e) {
-                          showMessage("Couldn't log into Reddit successfully :(");
+                          showMessage(
+                              "Couldn't log into Reddit successfully :(");
                         }
                       }();
                     }
@@ -82,6 +84,19 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        body: Feed(welcomeText:welcomeText));
+        body: Feed(welcomeText: welcomeText,));
+        // FutureBuilder<dynamic>(
+        //     future: welcomeText,
+        //     builder: (context, snapshot) {
+        //       if (snapshot.hasData) {
+        //         return Feed(welcomeText:welcomeText)); ListTile(
+        //             title: (snapshot.data.containsKey("message"))
+        //                 ? Text(snapshot.data["message"])
+        //                 : Text("Hello!"));
+        //       } else if (snapshot.hasError) {
+        //         return Fee(title: Text("${snapshot.error}"));
+        //       }
+        //       return CircularProgressIndicator();
+        //     }));
   }
 }

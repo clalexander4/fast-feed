@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import makeRequest = require('request');
+import snoowrap = require('snoowrap');
 // import * as Twitter from 'twitter';
 // import * as config from './config';
 // import * as twtfunctions from './twtfunctions';
@@ -115,4 +116,39 @@ export const saveToken = functions.https.onRequest((req, response) => {
             }
         });
     }
+});
+
+export const getRedditPosts = functions.https.onRequest((request, response) => {
+    console.log(request.body.data);
+
+    const userRef = db.doc(`users/${request.body.data["uid"]}`);
+
+    userRef.get().then((value: FirebaseFirestore.DocumentSnapshot) => {
+        const data = value.data();
+        console.log(data);
+        if (data) {
+            const r = new snoowrap({
+                userAgent: 'flutter:com.fastr.fastfeed:v0.0.3 (by /u/davidamccoy)',
+                clientId: '8huDE0vSDV4wKg',
+                clientSecret: '',
+                refreshToken: data["refresh_token"]
+            });
+            r.getSubreddit(request.body.data["subreddit"]).getNew({limit: 10}).then((submissions: snoowrap.Listing<snoowrap.Submission>) => {
+                console.log(submissions);
+                response.send({
+                    "data": {
+                        "submissions": submissions
+                    }
+                })
+            }).catch(() => response.send({
+                "data": {
+                    "error": "oh dang couldn't load subreddit submissions"
+                }
+            }));
+        }
+    }).catch(() => response.send({
+        "data": {
+            "error": "very disappointing couldn't load database"
+        }
+    }));
 });
