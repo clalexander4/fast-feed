@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fastfeed/Classes/auth.dart';
-import 'package:fastfeed/Classes/post.dart';
+import "package:simple_auth/simple_auth.dart";
 import 'package:fastfeed/Enum/appOptions.dart';
 import 'package:english_words/english_words.dart';
 import 'package:fastfeed/Pages/feed.dart';
 import 'package:fastfeed/Classes/oauth.dart';
+import 'package:fastfeed/Classes/functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title, this.welcomeText}) : super(key: key);
@@ -52,10 +55,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       () async {
                         try {
                           await redditApi.logOut();
-                          var user = await redditApi.authenticate();
-                          showMessage("${user.userData} logged in");
+                          OAuthAccount user = await redditApi.authenticate();
+                          FirebaseUser currentUser = await authService.getCurrentUser();
+                          dynamic response = await callFunction("saveToken", { "token": user.token, "uid": currentUser.uid });
+                          response;
+                          showMessage("Logged into Reddit!");
                         } catch (e) {
-                          showMessage("error");
+                          showMessage("Couldn't log into Reddit successfully :(");
                         }
                       }();
                     }
