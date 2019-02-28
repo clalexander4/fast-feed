@@ -139,7 +139,7 @@ export const getRedditPosts = functions.https.onRequest((request, response) => {
         console.log(data);
         if (data) {
             const r = new snoowrap({
-                userAgent: 'flutter:com.fastr.fastfeed:v0.0.3 (by /u/davidamccoy)',
+                userAgent: 'node.js:com.fastr.fastfeed:v0.0.3 (by /u/davidamccoy)',
                 clientId: '8huDE0vSDV4wKg',
                 clientSecret: '',
                 refreshToken: data["refresh_token"]

@@ -1,1 +1,1 @@
-enum AppOptions { signOut, redditAuth }
+enum AppOption { signOut, openConnections }

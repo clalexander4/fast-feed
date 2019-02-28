@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fastfeed/Classes/auth.dart';
-import "package:simple_auth/simple_auth.dart";
 import 'package:fastfeed/Enum/appOptions.dart';
-import 'package:english_words/english_words.dart';
 import 'package:fastfeed/Pages/feed.dart';
-import 'package:fastfeed/Classes/oauth.dart';
-import 'package:fastfeed/Classes/functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:fastfeed/Pages/connections.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title, this.welcomeText}) : super(key: key);
@@ -22,19 +17,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   _MyHomePageState({Key key, this.welcomeText});
   final Future<dynamic> welcomeText;
-  final wordPair = WordPair.random();
-
-  void showMessage(String text) {
-    var alert = new AlertDialog(content: new Text(text), actions: <Widget>[
-      new FlatButton(
-          child: const Text("Ok"),
-          onPressed: () {
-            Navigator.pop(context);
-          })
-    ]);
-    showDialog(context: context, builder: (BuildContext context) => alert);
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,61 +25,40 @@ class _MyHomePageState extends State<MyHomePage> {
           title: const Text('FastFeed'),
           actions: <Widget>[
             // menu
-            PopupMenuButton<AppOptions>(
-              onSelected: (AppOptions option) {
+            PopupMenuButton<AppOption>(
+              onSelected: (AppOption option) {
                 switch (option) {
-                  case AppOptions.signOut:
+                  case AppOption.signOut:
                     {
                       authService.signOut();
                     }
                     break;
-                  case AppOptions.redditAuth:
+                  case AppOption.openConnections:
                     {
-                      () async {
-                        try {
-                          await redditApi.logOut();
-                          OAuthAccount user = await redditApi.authenticate();
-                          FirebaseUser currentUser =
-                              await authService.getCurrentUser();
-                          callFunction("saveToken",
-                              {"token": user.token, "uid": currentUser.uid});
-                          showMessage("Logged into Reddit!");
-                        } catch (e) {
-                          showMessage(
-                              "Couldn't log into Reddit successfully :(");
-                        }
-                      }();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Connections())
+                      );
                     }
                     break;
                 }
               },
               itemBuilder: (BuildContext context) =>
-                  <PopupMenuEntry<AppOptions>>[
-                    const PopupMenuItem<AppOptions>(
-                      value: AppOptions.signOut,
+                  <PopupMenuEntry<AppOption>>[
+                    const PopupMenuItem<AppOption>(
+                      value: AppOption.signOut,
                       child: Text('Sign Out'),
                     ),
-                    const PopupMenuItem<AppOptions>(
-                      value: AppOptions.redditAuth,
-                      child: Text('Authorize Reddit'),
+                    const PopupMenuItem<AppOption>(
+                      value: AppOption.openConnections,
+                      child: Text('Manage connections'),
                     ),
                   ],
             ),
           ],
         ),
-        body: Feed(welcomeText: welcomeText,));
-        // FutureBuilder<dynamic>(
-        //     future: welcomeText,
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasData) {
-        //         return Feed(welcomeText:welcomeText)); ListTile(
-        //             title: (snapshot.data.containsKey("message"))
-        //                 ? Text(snapshot.data["message"])
-        //                 : Text("Hello!"));
-        //       } else if (snapshot.hasError) {
-        //         return Fee(title: Text("${snapshot.error}"));
-        //       }
-        //       return CircularProgressIndicator();
-        //     }));
+        body: Feed(
+          welcomeText: welcomeText,
+        ));
   }
 }
