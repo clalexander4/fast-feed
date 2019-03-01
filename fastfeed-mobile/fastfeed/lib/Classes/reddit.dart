@@ -5,7 +5,7 @@ import "package:http/http.dart" as http;
 
 class RedditApi extends OAuthApi {
   RedditApi(String identifier, String clientId, String clientSecret,
-      String redirectUrl,
+      String redirectUrl, bool isIos,
       {List<String> scopes,
       http.Client client,
       Converter converter,
@@ -22,13 +22,19 @@ class RedditApi extends OAuthApi {
     this.authorizationUrl = "https://www.reddit.com/api/v1/authorize.compact";
     this.redirectUrl = redirectUrl;
     this.state = state;
+    this.isIos = isIos;
   }
 
   String state;
+  bool isIos = false;
 
-  Authenticator getAuthenticator() => RedditAuthenticator(identifier, clientId,
+  @override
+  Authenticator getAuthenticator() {
+    var authenticator = RedditAuthenticator(identifier, clientId,
       clientSecret, tokenUrl, authorizationUrl, redirectUrl, scopes, state);
-
+    authenticator.useEmbeddedBrowser = !isIos;
+    return authenticator;
+  }
 
   @override
   Future<OAuthAccount> getAccountFromAuthCode(

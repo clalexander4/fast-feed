@@ -55,10 +55,12 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         } else {
           user = await authService.signUp(_email, _password);
         }
-        setState(() {
-          _isLoading = false;
-          // Navigator.pop(context);
-        });
+        if (this != null) {
+          setState(() {
+            _isLoading = false;
+            // Navigator.pop(context);
+          });
+        }
 
         // if (userId.length > 0 && userId != null) {
         //   widget.onSignedIn();

@@ -31,8 +31,8 @@ class _ConnectionsState extends State<Connections> {
             RaisedButton(
               onPressed: () async {
                 try {
-                  await redditApi.logOut();
-                  OAuthAccount user = await redditApi.authenticate();
+                  await redditApi(context).logOut();
+                  OAuthAccount user = await redditApi(context).authenticate();
                   FirebaseUser currentUser = await authService.getCurrentUser();
                   callFunction("saveToken",
                       {"token": user.token, "uid": currentUser.uid});
