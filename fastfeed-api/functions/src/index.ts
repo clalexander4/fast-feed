@@ -16,11 +16,9 @@ FB.options({version: 'v2.4'});
 FB.setAccessToken('EAATeoZCPkzmUBAJ5K7xQ5zqdNdpWCuvsAz0XdND2WtiktvdFQr6sQ2ZC3ZCw2r96aUeb0k30vZCU5pYnwZBUX3NV9mqNnubZCzG5yyoy51SXZBXEqAHHHWlieZCuJyXyBFnmZCoZBsnwSGGP6CCTq9L5bb4HPv6a3b3WQEJdxCc5cReu9VZB3Mxbdlitb045xc5qt0ZD');
 
 export const getFacebookUserFeed = functions.https.onRequest((request, response) => {
-    FB.id = '987160298144095';
     fbfunctions.getFbUserFeed(FB,response);
 });
 export const getFacebookLikes = functions.https.onRequest((request, response) => {
-    FB.id = '10213329836548424';
     fbfunctions.getFbLikes(FB,response);
 });
 
