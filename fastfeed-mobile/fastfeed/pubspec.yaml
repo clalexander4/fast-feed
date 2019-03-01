@@ -30,6 +30,9 @@ dependencies:
       url: https://github.com/damccoy1/simple_auth.git
       path: simple_auth_flutter
   simple_auth_generator: ^2.0.2
+  flutter_signin_button:
+    git:
+      url: https://github.com/damccoy1/Flutter-Sign-in-Button.git
 
   rxdart: ^0.20.0
 
